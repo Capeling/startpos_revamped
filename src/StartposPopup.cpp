@@ -2,7 +2,7 @@
 
 StartposPopup* StartposPopup::create(LevelSettingsObject* settings) {
     StartposPopup* ret = new StartposPopup();
-    if(ret->initAnchored(450, 250, settings, "GJ_square01.png")) {
+    if(ret->initAnchored(440, 310, settings, "GJ_square01.png")) {
         ret->autorelease();
         return ret;
     }
@@ -20,25 +20,29 @@ bool StartposPopup::setup(LevelSettingsObject* settings) {
     m_closeBtn->m_pfnSelector = menu_selector(StartposPopup::onClose);
     m_closeBtn->setPosition(ccp(m_mainLayer->getContentWidth() / 2, 25));
 
+    auto title = cocos2d::CCLabelBMFont::create("Setup Startpos Command", "bigFont.fnt");
+    m_mainLayer->addChildAtPosition(title, geode::Anchor::Top, ccp(.0f, -14.f));
+    title->setScale(.5f);
+
     // Gamemodes
     auto gamemodeLabel = cocos2d::CCLabelBMFont::create("Select Mode:", "goldFont.fnt");
     gamemodeLabel->setScale(0.8f);
-    m_mainLayer->addChildAtPosition(gamemodeLabel, geode::Anchor::Top, ccp(0, -25));
+    m_mainLayer->addChildAtPosition(gamemodeLabel, geode::Anchor::Center, ccp(0, 100));
     gamemodeLabel->setID("gamemode-label");
 
     auto gamemodeMenu = cocos2d::CCMenu::create();
-    gamemodeMenu->setLayout(geode::RowLayout::create()->setGap(10));
-    m_mainLayer->addChildAtPosition(gamemodeMenu, geode::Anchor::Top, ccp(0, -60));
+    gamemodeMenu->setLayout(geode::RowLayout::create()->setGap(9));
+    m_mainLayer->addChildAtPosition(gamemodeMenu, geode::Anchor::Center, ccp(0, 60));
 
     // Speeds
     auto speedLabel = cocos2d::CCLabelBMFont::create("Select Speed:", "goldFont.fnt");
     speedLabel->setScale(0.8f);
-    m_mainLayer->addChildAtPosition(speedLabel, geode::Anchor::Top, ccp(0, -95));
+    m_mainLayer->addChildAtPosition(speedLabel, geode::Anchor::Center, ccp(0, 10));
     speedLabel->setID("speed-label");
 
     auto speedMenu = cocos2d::CCMenu::create();
     speedMenu->setLayout(geode::RowLayout::create()->setGap(10));
-    m_mainLayer->addChildAtPosition(speedMenu, geode::Anchor::Top, ccp(0, -140));
+    m_mainLayer->addChildAtPosition(speedMenu, geode::Anchor::Center, ccp(0, -40));
 
     m_gamemodes[0] = createGamemode("gj_iconBtn_on_001.png", "gj_iconBtn_off_001.png", 0);
     m_gamemodes[1] = createGamemode("gj_shipBtn_on_001.png", "gj_shipBtn_off_001.png", 1);
@@ -75,11 +79,11 @@ bool StartposPopup::setup(LevelSettingsObject* settings) {
     // Toggles
     auto leftTogglesMenu = cocos2d::CCMenu::create();
     leftTogglesMenu->setLayout(geode::ColumnLayout::create()->setGap(15)->setAutoScale(false)->setAxisReverse(true));
-    m_mainLayer->addChildAtPosition(leftTogglesMenu, geode::Anchor::Left, ccp(32, 0));
+    m_mainLayer->addChildAtPosition(leftTogglesMenu, geode::Anchor::Left, ccp(32, 15));
 
     auto rightTogglesMenu = cocos2d::CCMenu::create();
     rightTogglesMenu->setLayout(geode::ColumnLayout::create()->setGap(15)->setAutoScale(false)->setAxisReverse(true));
-    m_mainLayer->addChildAtPosition(rightTogglesMenu, geode::Anchor::Right, ccp(-32, 0));
+    m_mainLayer->addChildAtPosition(rightTogglesMenu, geode::Anchor::Right, ccp(-32, 15));
 
     m_leftTogglesArr[0] = Toggle::create("Flip", settings->m_isFlipped, [this](CCMenuItemToggler* sender){
         m_settings->m_isFlipped = !m_settings->m_isFlipped;
@@ -150,11 +154,11 @@ bool StartposPopup::setup(LevelSettingsObject* settings) {
     });
     m_channelInput->setID("channel-input");
 
-    m_mainLayer->addChildAtPosition(orderLabel, geode::Anchor::BottomLeft, ccp(125, 57));
-    m_mainLayer->addChildAtPosition(m_orderInput, geode::Anchor::BottomLeft, ccp(125, 30));
+    m_mainLayer->addChildAtPosition(orderLabel, geode::Anchor::BottomLeft, ccp(100, 57));
+    m_mainLayer->addChildAtPosition(m_orderInput, geode::Anchor::BottomLeft, ccp(100, 30));
 
-    m_mainLayer->addChildAtPosition(channelLabel, geode::Anchor::BottomRight, ccp(-125, 57));
-    m_mainLayer->addChildAtPosition(m_channelInput, geode::Anchor::BottomRight, ccp(-125, 30));
+    m_mainLayer->addChildAtPosition(channelLabel, geode::Anchor::BottomRight, ccp(-100, 57));
+    m_mainLayer->addChildAtPosition(m_channelInput, geode::Anchor::BottomRight, ccp(-100, 30));
 
     setID("startpos-popup"_spr);
 
